@@ -8,10 +8,12 @@ def read_env(key: str) -> str:
     lines = text.split("\n")
 
     output = ""
-    
+
     for line in lines:
         key_value = line.split("=")
         if key_value[0] == key:
             output = key_value[1]
-    
+
+    file.close()
+
     return output

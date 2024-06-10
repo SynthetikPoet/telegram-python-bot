@@ -1,9 +1,16 @@
-from read_env import read_env
-from fetch import getMe
-def main():
-    # token = read_env("BOT_TOKEN")
-    output = getMe()
-    print(output)
+from connection import Connection
+from time import sleep
+
+def main() -> None:
+    val: Connection = Connection()
+    
+    print(val.getMe())
+
+    # example 
+    # while (True):
+    #     val.getMe()
+    #     sleep(5)  
+    #     break
 
     return
 
