@@ -1,6 +1,5 @@
 from http import client
-import urllib
-import urllib.parse
+from urllib import parse
 from read_env import read_env
 import json
 
@@ -43,6 +42,7 @@ class Connection:
     # TODO update function call
     # may add try/catch
     def sendMessage(self, chat_id: int, text: str) -> any: 
+        text = parse.quote(text)
         self.conn.request(
             "GET", f"/bot{self.token}/sendMessage?chat_id={chat_id}&text={text}")
         response = self.conn.getresponse()

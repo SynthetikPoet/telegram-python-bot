@@ -1,12 +1,18 @@
 from connection import Connection
 from time import sleep
+from urllib import parse
 
-def check_command(): 
-    return False
+def get_action(text, prefix):
 
-# add args if needed =>
-def command_action(conn):
-    pass
+    if (text): 
+        action = command_help
+
+    return action
+
+def command_help(conn: Connection, chat_id):
+    help_message = "Here are my commands \n /help get help"
+    conn.sendMessage(chat_id, help_message)
+
 
 def main() -> None:
     conn: Connection = Connection()
@@ -20,14 +26,12 @@ def main() -> None:
         text = last_message['text']
         chat_id = last_message['from']['id']
         
-        # check id_update; 
-        # last id_update => 
-
         if (last_update_id < update_id):
             last_update_id = update_id
-            if (text == f"{prefix}answer"): 
-                conn.sendMessage(chat_id, "Iamhere!")
-
+            if (text[0] == prefix): 
+                action = get_action(text, prefix)
+                action(conn, chat_id)
+                pass
         sleep(1)
 
 main()
