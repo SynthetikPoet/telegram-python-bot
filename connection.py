@@ -1,4 +1,6 @@
 from http import client
+import urllib
+import urllib.parse
 from read_env import read_env
 import json
 
@@ -18,7 +20,7 @@ class Connection:
         print("Connection closed")
         self.conn.close()
 
-    def getMe(self): 
+    def getMe(self) -> any: 
         self.conn.request("GET", f"/bot{self.token}/getMe")
         response = self.conn.getresponse()
         data = response.read().decode()
@@ -27,6 +29,27 @@ class Connection:
 
         return output
 
+    def logOut(self) -> any:
+        self.conn.request("GET", f"bot/{self.token}/logOut")
+        response = self.conn.getresponse()
+        data = response.read.decode()
+
+        output = json.loads(data)
+
+        return output
+
+    # TODO update function call
+    # may add try/catch
+    def sendMessage(self, chat_id: int, text: str) -> any: 
+        body = urllib.parse.urlencode({"chat_id": chat_id, "text": text})
+        self.conn.request("POST", f"bot/{self.token}/sendMessage", body=body)
+        response = self.conn.getresponse()
+        data = response.read.decode()
+
+        output = json.loads(data)
+
+        return output
+    
     # TODO: defines needed methods ...
     
 

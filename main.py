@@ -2,9 +2,10 @@ from connection import Connection
 from time import sleep
 
 def main() -> None:
-    val: Connection = Connection()
+    conn: Connection = Connection()
     
-    print(val.getMe())
+    print(conn.getMe())
+    print(conn.sendMessage(1, "Hello"))
 
     # example 
     # while (True):
@@ -12,6 +13,6 @@ def main() -> None:
     #     sleep(5)  
     #     break
 
-    return
+    return 
 
 main()
