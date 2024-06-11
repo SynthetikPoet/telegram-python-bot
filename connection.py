@@ -19,6 +19,8 @@ class Connection:
     def __del__(self) -> None: 
         print("Connection closed")
         self.conn.close()
+    
+    # TODO: defines needed api methods ...
 
     def getMe(self) -> any: 
         self.conn.request("GET", f"/bot{self.token}/getMe")
@@ -30,9 +32,9 @@ class Connection:
         return output
 
     def logOut(self) -> any:
-        self.conn.request("GET", f"bot/{self.token}/logOut")
+        self.conn.request("GET", f"bot{self.token}/logOut")
         response = self.conn.getresponse()
-        data = response.read.decode()
+        data = response.read().decode()
 
         output = json.loads(data)
 
@@ -41,16 +43,21 @@ class Connection:
     # TODO update function call
     # may add try/catch
     def sendMessage(self, chat_id: int, text: str) -> any: 
-        body = urllib.parse.urlencode({"chat_id": chat_id, "text": text})
-        self.conn.request("POST", f"bot/{self.token}/sendMessage", body=body)
+        self.conn.request(
+            "GET", f"/bot{self.token}/sendMessage?chat_id={chat_id}&text={text}")
         response = self.conn.getresponse()
-        data = response.read.decode()
+        data = response.read().decode()
 
         output = json.loads(data)
 
         return output
-    
-    # TODO: defines needed methods ...
-    
 
-# def getUpdates():
+    # TODO update function call
+    def getUpdates(self) -> any:
+        self.conn.request("GET", f"/bot{self.token}/getUpdates")
+        response = self.conn.getresponse()
+        data = response.read().decode()
+
+        output = json.loads(data)
+
+        return output

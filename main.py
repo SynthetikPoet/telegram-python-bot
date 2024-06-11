@@ -3,16 +3,17 @@ from time import sleep
 
 def main() -> None:
     conn: Connection = Connection()
+    prefix = "/"
     
-    print(conn.getMe())
-    print(conn.sendMessage(1, "Hello"))
+    while (True):
+        update = conn.getUpdates()
+        last_message = update["result"][len(update["result"]) - 1]["message"]
+        text = last_message['text']
+        chat_id = last_message['from']['id']
 
-    # example 
-    # while (True):
-    #     val.getMe()
-    #     sleep(5)  
-    #     break
-
-    return 
+        if (text == f"{prefix}answer"): 
+            conn.sendMessage(chat_id, "Iamhere!")
+            break
+        sleep(1)
 
 main()
